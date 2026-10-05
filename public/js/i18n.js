@@ -14,8 +14,8 @@
   }
 
   var FLAGS = {
-    en: '<img src="/img/flag-english.png" alt="" aria-hidden="true">',
-    ar: '<img src="/img/flag-jordan.png" alt="" aria-hidden="true">'
+    en: '<img src="/__l5e/assets-v1/66c2da58-c4ca-4c9e-aaa4-211f33619e45/flag-english.png" alt="" aria-hidden="true">',
+    ar: '<img src="/__l5e/assets-v1/2e27df24-7d71-4c68-b2ca-1349030f06ae/flag-jordan.png" alt="" aria-hidden="true">'
   };
 
   var NAMES = { en: "English", ar: "Jordan" };
