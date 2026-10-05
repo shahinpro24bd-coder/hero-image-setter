@@ -6,7 +6,7 @@ import { getTreatment } from "./treatments";
 import originalAssets from "@/assets/original-map.json";
 import heroPortrait from "@/assets/hero-portrait.png.asset.json";
 import optimizedAssets from "@/assets/optimized-map.json";
-import optimizedPortrait from "@/assets/hero-portrait.webp.asset.json";
+import optimizedPortrait from "@/assets/hero-portrait-new.webp.asset.json";
 
 /**
  * Builds one public page from the bundled language snapshot; the

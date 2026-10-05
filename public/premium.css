@@ -57,8 +57,8 @@ body .membership-card{height:100%;min-height:128px;display:grid!important;grid-t
 body .membership-card::before{content:counter(membership,decimal-leading-zero);position:absolute;right:.7rem;bottom:-.75rem;font-family:'Playfair Display',serif;font-style:italic;font-size:3.4rem;color:var(--paper);transition:color .4s,transform .4s}
 body .membership-card:hover{transform:translateY(-5px);border-color:var(--pg)!important}
 body .membership-card:hover::before{color:var(--pg-pale);transform:translateY(-4px)}
-body .membership-icon{width:52px!important;height:72px!important;min-width:52px!important;border-radius:0!important;display:flex!important;align-items:center;justify-content:center;background:var(--night)!important;border:0!important;color:var(--pg)!important;font-size:1rem!important;clip-path:polygon(0 0,100% 0,100% 82%,50% 100%,0 82%)}
-body .membership-icon i{color:var(--pg)!important}
+body .membership-icon{width:52px!important;height:72px!important;min-width:52px!important;border-radius:0!important;display:flex!important;align-items:center;justify-content:center;background:#005430!important;border:0!important;color:var(--pg)!important;font-size:1rem!important;clip-path:polygon(0 0,100% 0,100% 82%,50% 100%,0 82%)}
+body .membership-icon i{color:#fff!important}
 body .education-section .membership-icon{background:transparent!important;border:1px solid var(--pg)!important;clip-path:none!important}
 body .education-section .membership-icon i{color:#005430!important}
 body .education-section .membership-card:hover .membership-icon{background:var(--pg)!important}
