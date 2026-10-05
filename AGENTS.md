@@ -10,8 +10,9 @@
 <!-- LOVABLE:END -->
 
 ## Website preservation
-- Serve the uploaded public HTML through TanStack page handlers using the bundled language snapshot, without adding an unrelated backend.
+- Serve the uploaded public HTML through TanStack page handlers using the bundled language snapshot merged with published overrides from the original content backend, without adding an unrelated backend.
 - Keep the original public styles and scripts intact so the imported website retains its established appearance and behavior.
 - Resolve imported media through the CDN asset map, and scope the supplied portrait replacement to the homepage hero image only.
 - On Vercel, proxy the Lovable asset prefix through an external rewrite to the project's stable asset-serving origin so HTML, CSS and script-generated media retain their existing URLs.
 - Cache fully prepared HTML per page, language, origin and content version; use optimized CDN image variants and intent-based document prefetching without replacing legacy navigation or styles.
+- The /admin editor reuses the original content backend via the public config fallback, so login and publishing work on any host without extra environment setup.
