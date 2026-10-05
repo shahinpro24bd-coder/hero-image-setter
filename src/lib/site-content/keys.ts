@@ -29,7 +29,7 @@ export function textKey(source: string): string {
 
 /** Turns "img/service-protez.jpg" into the stable slot "service-protez". */
 export function imageSlot(src: string): string {
-  const clean = (src || "").split("?")[0]!.split("#")[0]!;
+  const clean = ((src || "").split("?")[0] ?? "").split("#")[0] ?? "";
   const base = clean.substring(clean.lastIndexOf("/") + 1);
   const noExt = base.replace(/\.[a-z0-9]+$/i, "");
   return (

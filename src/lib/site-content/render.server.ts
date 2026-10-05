@@ -3,6 +3,8 @@ import { PAGE_SOURCE } from "./pages.server";
 import { renderPage } from "./transform";
 import { createTreatmentPage } from "./treatment-page";
 import { getTreatment } from "./treatments";
+import originalAssets from "@/assets/original-map.json";
+import heroPortrait from "@/assets/hero-portrait.png.asset.json";
 
 /**
  * Builds one public page: every string and image comes from the database, the
@@ -108,6 +110,20 @@ export async function renderTreatmentPage(request: Request, slug: string): Promi
 const RENDER_CACHE = new Map<string, string>();
 
 function htmlResponse(html: string, version: number | string, editMode: boolean): Response {
+  // Preserve all original markup and styling; replace only the homepage portrait.
+  html = html.replace(/(<img\b[^>]*class="hero-reference-doctor"[^>]*src=")[^"]*(")/g, `$1${heroPortrait.url}$2`);
+  if (html.includes('class="hero-reference-doctor"')) {
+    html = html.replace(/(<link rel="preload" as="image" href=")\/img\/dental-care-portrait\.jpg(")/g, `$1${heroPortrait.url}$2`);
+  }
+  for (const [path, url] of Object.entries(originalAssets)) {
+    html = html.split(path).join(url);
+  }
+  html = html.replace(/(href|src)="(css\/|lib\/|js\/|home\.css|theme-gold\.css|premium\.css)/g, '$1="/$2');
+  if (!html.includes('property="og:title"')) {
+    const title = html.match(/<title[^>]*>([^<]*)<\/title>/)?.[1] ?? 'Dr. Zaid Khaled Alamoudi';
+    const description = 'General and aesthetic dental care with Dr. Zaid Khaled Alamoudi in Amman, Jordan.';
+    html = html.replace('</head>', `<meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"></head>`);
+  }
   return new Response(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",

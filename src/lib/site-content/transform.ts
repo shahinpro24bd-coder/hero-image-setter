@@ -80,7 +80,8 @@ function walk(
 ) {
   const stack: AnyNode[] = [root];
   while (stack.length) {
-    const node = stack.pop()!;
+    const node = stack.pop();
+    if (!node) continue;
     const children = node.childNodes || [];
 
     if (node.tagName) {
@@ -170,7 +171,7 @@ export function collectSiteContent(html: string): SiteContent {
       pushImage(src);
     },
     onBackground: (_node, style) => {
-      for (const m of style.matchAll(BG_URL_RE)) pushImage(m[2]!);
+      for (const m of style.matchAll(BG_URL_RE)) if (m[2]) pushImage(m[2]);
     },
   });
 
@@ -212,8 +213,8 @@ export function renderPage(html: string, options: RenderOptions): string {
   walk(doc, {
     onText: (node, parent) => {
       const raw = node.value || "";
-      const leading = raw.match(/^\s*/)![0];
-      const trailing = raw.match(/\s*$/)![0];
+      const leading = raw.match(/^\s*/)?.[0] ?? "";
+      const trailing = raw.match(/\s*$/)?.[0] ?? "";
       const { key, value } = resolveText(raw);
       node.value = leading + value + trailing;
       const list = keysByParent.get(parent) || [];
