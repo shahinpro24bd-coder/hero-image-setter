@@ -451,12 +451,12 @@ body.about-editorial .membership-icon {
     width: 62px;
     height: 74px;
     border-radius: 0;
-    background: var(--about-ink);
+    background: #005430;
     box-shadow: none;
 }
 
 body.about-editorial .membership-icon i {
-    color: var(--about-gold);
+    color: #fff;
 }
 
 body.about-editorial .membership-org {
