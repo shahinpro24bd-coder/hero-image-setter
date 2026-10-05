@@ -1,7 +1,7 @@
 /* Lightweight instant navigation: cache documents, never their image payloads. */
 (function () {
   "use strict";
-  if (window.top !== window.self || window.__SITE_EDIT__) return;
+  if (window.__SITE_EDIT__) return;
 
   var prefetched = Object.create(null);
 
@@ -10,7 +10,8 @@
     try {
       var url = new URL(href, location.href);
       if (url.origin !== location.origin) return null;
-      if (!(/\/$/.test(url.pathname) || /\.html$/.test(url.pathname))) return null;
+      if (!(/\/$/.test(url.pathname) || /\.html$/.test(url.pathname) || /^\/treatments\/[^/]+$/.test(url.pathname))) return null;
+      if (/^\/admin(?:\/|\.html|$)/.test(url.pathname) || url.searchParams.has("edit")) return null;
       if (url.pathname === location.pathname && url.search === location.search) return null;
       url.hash = "";
       return url.href;
@@ -20,6 +21,8 @@
   }
 
   function prefetch(href) {
+    var connection = navigator.connection;
+    if (connection && (connection.saveData || /(^|-)2g$/.test(connection.effectiveType))) return;
     var url = internal(href);
     if (!url || prefetched[url]) return;
     prefetched[url] = true;
@@ -51,10 +54,15 @@
   }
 
   function scheduleWarmNavigation() {
-    if ("requestIdleCallback" in window) requestIdleCallback(warmNavigation, { timeout: 1500 });
-    else setTimeout(warmNavigation, 600);
+    if ("requestIdleCallback" in window) requestIdleCallback(warmNavigation, { timeout: 800 });
+    else setTimeout(warmNavigation, 300);
   }
 
-  if (document.readyState === "complete") scheduleWarmNavigation();
-  else window.addEventListener("load", scheduleWarmNavigation, { once: true });
+  document.addEventListener("focusin", function (event) {
+    var link = targetLink(event);
+    if (link) prefetch(link.href);
+  });
+
+  if (document.readyState !== "loading") scheduleWarmNavigation();
+  else document.addEventListener("DOMContentLoaded", scheduleWarmNavigation, { once: true });
 })();
